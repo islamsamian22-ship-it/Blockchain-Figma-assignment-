@@ -2,6 +2,8 @@
 
 Academic prototype showing how NFTs can trace a garment production order (2,000 × Basic Cotton T-Shirts, `ORDER-001`) from factory onboarding to payment release. 
 
+**Live demo:** https://islamsamian22-ship-it.github.io/Blockchain-Figma-assignment-/ (deployed by GitHub Actions on every push to `main`)
+
 ## Views
 - **Simulation**: step through the five mint events. The batch handoff needs both sender and receiver sign-off before it can be minted. Payment stays in escrow until finishing is inspected.
 - **NFT Wallet**: all five NFTs, filterable by Group / Individual. Click one for its attributes, linked tokens, metadata JSON and OpenSea link.
