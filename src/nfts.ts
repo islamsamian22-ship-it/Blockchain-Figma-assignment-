@@ -32,6 +32,9 @@ export interface NftDef {
   accent: string
 }
 
+/** Respects Vite's base path so images load on GitHub Pages */
+const IMG = `${import.meta.env.BASE_URL}images/`
+
 export const ORDER_ID = 'ORDER-001'
 export const PRODUCT = 'Basic Cotton T-Shirts'
 export const BATCH_QTY = 2000
@@ -44,7 +47,7 @@ export const NFTS: Record<NftId, NftDef> = {
     name: 'Factory Credential',
     scope: 'Group',
     opensea: 'https://opensea.io/collection/factory-credentials-32228465',
-    image: '/images/factory-credential.jpg',
+    image: IMG + 'factory-credential.jpg',
     holder: 'Dhaka Cotton Works',
     role: 'Main production factory',
     summary: 'Approves Dhaka Cotton Works (FACTORY-001) as the main factory for ORDER-001.',
@@ -65,7 +68,7 @@ export const NFTS: Record<NftId, NftDef> = {
     scope: 'Group',
     opensea: 'https://opensea.io/item/polygon/0xf843cd21c82608de63e21b9e809f4de757b6504f/1',
     contract: '0xf843cd21c82608de63e21b9e809f4de757b6504f',
-    image: '/images/production-order-passport.jpg',
+    image: IMG + 'production-order-passport.jpg',
     holder: 'Crypto Whales Group',
     role: 'Brand',
     summary: 'The digital passport for one production order.',
@@ -85,7 +88,7 @@ export const NFTS: Record<NftId, NftDef> = {
     name: 'Subcontractor Approval',
     scope: 'Individual',
     opensea: 'https://opensea.io/collection/subcontractor-approval-sc-001',
-    image: '/images/subcontractor-approval.jpg',
+    image: IMG + 'subcontractor-approval.jpg',
     holder: 'Zayed',
     role: 'Subcontractor · SC-001',
     summary: 'Authorises Zayed (SC-001) to carry out labelling.',
@@ -105,7 +108,7 @@ export const NFTS: Record<NftId, NftDef> = {
     name: 'Batch Handoff',
     scope: 'Individual',
     opensea: 'https://opensea.io/collection/batch-handoff',
-    image: '/images/batch-handoff.jpg',
+    image: IMG + 'batch-handoff.jpg',
     holder: 'Ibrahim',
     role: 'Logistics',
     summary: 'Records a batch moving between facilities, signed by both sides.',
@@ -125,7 +128,7 @@ export const NFTS: Record<NftId, NftDef> = {
     name: 'Verified Finishing Completion',
     scope: 'Individual',
     opensea: 'https://opensea.io/collection/verified-finishing-completion',
-    image: '/images/finishing-completion.jpg',
+    image: IMG + 'finishing-completion.jpg',
     holder: 'Lucas',
     role: 'Inspector',
     summary: 'Inspector sign-off that finishing work and records are verified.',
