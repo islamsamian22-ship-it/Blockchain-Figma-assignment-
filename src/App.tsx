@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   BATCH_QTY,
+  CHAIN,
   NFTS,
   NFT_ORDER,
   ORDER_ID,
@@ -37,6 +38,9 @@ interface ChainState {
 }
 
 type View = 'simulation' | 'wallet' | 'passport'
+type ScopeFilter = 'All' | 'Group' | 'Individual'
+
+const QTY = BATCH_QTY.toLocaleString('en-US')
 
 const STORAGE_KEY = 'cw-supply-chain-v1'
 const GENESIS_BLOCK = 19_402_118
@@ -71,16 +75,16 @@ function now(): string {
 /* Step copy for the simulation – one step per NFT */
 const STEPS: Record<NftId, { title: string; actor: string; action: string; detail: string }> = {
   factory: {
-    title: 'Onboard the factory',
-    actor: 'Crypto Whales Group',
+    title: 'Approve the factory',
+    actor: 'Crypto Whales Group → Dhaka Cotton Works',
     action: 'Issue Factory Credential',
-    detail: 'The brand verifies the facility and issues a non-transferable credential.',
+    detail: 'Dhaka Cotton Works (FACTORY-001, Dhaka) is approved as the main production factory.',
   },
   order: {
     title: 'Create the production order',
     actor: 'Crypto Whales Group',
     action: 'Mint Order Passport',
-    detail: `${ORDER_ID}: ${BATCH_QTY} × ${PRODUCT}. Payment is locked in escrow until the order is verified.`,
+    detail: `${ORDER_ID}: ${QTY} × ${PRODUCT}. Payment is locked in escrow until the order is verified.`,
   },
   subcontractor: {
     title: 'Approve the labelling subcontractor',
@@ -178,10 +182,19 @@ function NftModal({
         <NftImage nft={nft} className="modal-image" />
         <div className="modal-body">
           <p className="eyebrow">
-            Token #{nft.tokenId} · {nft.standard}
+            #{nft.tokenId} · {nft.scope} NFT · {CHAIN}
           </p>
           <h2 id="modal-title">{nft.name}</h2>
           <p className="muted">{nft.purpose}</p>
+
+          <a className="btn btn-opensea" href={nft.opensea} target="_blank" rel="noopener noreferrer">
+            View on OpenSea ↗
+          </a>
+          {nft.contract && (
+            <p className="small muted mono contract" title={nft.contract}>
+              Contract {shortHash(nft.contract)} · token 1
+            </p>
+          )}
 
           <dl className="attr-grid">
             <div>
@@ -203,17 +216,17 @@ function NftModal({
           {record ? (
             <div className="tx-box">
               <div>
-                <span className="muted">Tx</span> <code title={record.tx}>{shortHash(record.tx)}</code>
+                <span className="muted">Simulated tx</span> <code title={record.tx}>{shortHash(record.tx)}</code>
               </div>
               <div>
                 <span className="muted">Block</span> <code>{record.block.toLocaleString()}</code>
               </div>
               <div>
-                <span className="muted">Minted</span> {record.at}
+                <span className="muted">Reached in demo</span> {record.at}
               </div>
             </div>
           ) : (
-            <p className="badge badge-muted">Not minted yet</p>
+            <p className="badge badge-muted">Not reached in the simulation yet</p>
           )}
 
           {(nft.linkedTo || children.length > 0) && (
@@ -367,14 +380,33 @@ function SimulationView({
 }
 
 function WalletView({ state, onOpen }: { state: ChainState; onOpen: (id: NftId) => void }) {
+  const [filter, setFilter] = useState<ScopeFilter>('All')
   const count = NFT_ORDER.filter((id) => state.minted[id]).length
+  const visible = NFT_ORDER.filter((id) => filter === 'All' || NFTS[id].scope === filter)
   return (
     <>
-      <p className="muted">
-        {count} of {NFT_ORDER.length} tokens minted. Locked cards unlock as you go through the simulation.
-      </p>
+      <div className="wallet-head">
+        <p className="muted">
+          {count} of {NFT_ORDER.length} reached in the simulation. All five are live on OpenSea ({CHAIN}).
+        </p>
+        <div className="chips" role="group" aria-label="Filter NFTs">
+          {(['All', 'Group', 'Individual'] as ScopeFilter[]).map((f) => (
+            <button
+              key={f}
+              className={`chip ${filter === f ? 'is-active' : ''}`}
+              aria-pressed={filter === f}
+              onClick={() => setFilter(f)}
+            >
+              {f}
+              <span className="chip-count">
+                {f === 'All' ? NFT_ORDER.length : NFT_ORDER.filter((id) => NFTS[id].scope === f).length}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
       <div className="nft-grid">
-        {NFT_ORDER.map((id) => {
+        {visible.map((id) => {
           const nft = NFTS[id]
           const record = state.minted[id]
           return (
@@ -386,10 +418,13 @@ function WalletView({ state, onOpen }: { state: ChainState; onOpen: (id: NftId) 
             >
               <div className="nft-art">
                 <NftImage nft={nft} />
-                {!record && <span className="lock">🔒 Not minted</span>}
+                {!record && <span className="lock">🔒 Locked in demo</span>}
               </div>
               <div className="nft-meta">
-                <span className="eyebrow">#{nft.tokenId}</span>
+                <div className="card-tags">
+                  <span className="eyebrow">#{nft.tokenId}</span>
+                  <span className={`scope scope-${nft.scope.toLowerCase()}`}>{nft.scope}</span>
+                </div>
                 <h3>{nft.name}</h3>
                 <p className="small muted">{nft.summary}</p>
                 <p className="small">
@@ -425,7 +460,7 @@ function PassportView({ state, onOpen }: { state: ChainState; onOpen: (id: NftId
           <p className="eyebrow">Production Order Passport</p>
           <h2>{ORDER_ID}</h2>
           <p className="muted">
-            {BATCH_QTY} × {PRODUCT}
+            {QTY} × {PRODUCT} · made by Dhaka Cotton Works
           </p>
           <PaymentBadge state={state} />
           {!state.minted.order && <p className="small muted">The passport is minted at step 2 of the simulation.</p>}
@@ -576,7 +611,9 @@ export default function App() {
         {view === 'passport' && <PassportView state={state} onOpen={setOpenId} />}
       </main>
 
-      <footer className="footer small muted">Academic prototype · Simulated chain, no real transactions</footer>
+      <footer className="footer small muted">
+        Academic prototype · NFTs live on {CHAIN} via OpenSea · Workflow, sign-offs and escrow are simulated
+      </footer>
 
       {openId && (
         <NftModal nft={NFTS[openId]} record={state.minted[openId]} onClose={closeModal} onOpen={setOpenId} />

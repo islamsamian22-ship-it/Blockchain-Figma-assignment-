@@ -12,7 +12,12 @@ export interface NftDef {
   id: NftId
   tokenId: number
   name: string
-  standard: 'ERC-721' | 'ERC-721 (soulbound)'
+  /** Group NFTs belong to the whole team; individual NFTs to one member */
+  scope: 'Group' | 'Individual'
+  /** Live listing on OpenSea (Polygon) */
+  opensea: string
+  /** Set when the link points at a single token rather than a collection */
+  contract?: string
   image: string
   holder: string
   role: string
@@ -29,24 +34,27 @@ export interface NftDef {
 
 export const ORDER_ID = 'ORDER-001'
 export const PRODUCT = 'Basic Cotton T-Shirts'
-export const BATCH_QTY = 500
+export const BATCH_QTY = 2000
+export const CHAIN = 'Polygon'
 
 export const NFTS: Record<NftId, NftDef> = {
   factory: {
     id: 'factory',
     tokenId: 1,
     name: 'Factory Credential',
-    standard: 'ERC-721 (soulbound)',
-    image: '/images/factory-credential.png',
-    holder: 'Crypto Whales Factory',
-    role: 'Manufacturer',
-    summary: 'Proves the factory passed onboarding and compliance checks.',
+    scope: 'Group',
+    opensea: 'https://opensea.io/collection/factory-credentials-32228465',
+    image: '/images/factory-credential.jpg',
+    holder: 'Dhaka Cotton Works',
+    role: 'Main production factory',
+    summary: 'Approves Dhaka Cotton Works (FACTORY-001) as the main factory for ORDER-001.',
     purpose:
-      'Issued once to a verified facility. Non-transferable, so a credential cannot be sold or lent to an unverified factory.',
+      'Issued to a facility once it has been approved, so anyone can check that the order is being made by an approved factory. The approval in this prototype is simulated and the facility is fictional.',
     attributes: [
-      { label: 'Facility', value: 'Crypto Whales Factory' },
-      { label: 'Status', value: 'Verified' },
-      { label: 'Transferable', value: 'No' },
+      { label: 'Factory ID', value: 'FACTORY-001' },
+      { label: 'Order ID', value: ORDER_ID },
+      { label: 'Location', value: 'Dhaka, Bangladesh' },
+      { label: 'Stage', value: 'Finishing' },
     ],
     accent: '#38e1d0',
   },
@@ -54,8 +62,10 @@ export const NFTS: Record<NftId, NftDef> = {
     id: 'order',
     tokenId: 2,
     name: 'Production Order Passport',
-    standard: 'ERC-721',
-    image: '/images/production-order-passport.png',
+    scope: 'Group',
+    opensea: 'https://opensea.io/item/polygon/0xf843cd21c82608de63e21b9e809f4de757b6504f/1',
+    contract: '0xf843cd21c82608de63e21b9e809f4de757b6504f',
+    image: '/images/production-order-passport.jpg',
     holder: 'Crypto Whales Group',
     role: 'Brand',
     summary: 'The digital passport for one production order.',
@@ -64,7 +74,7 @@ export const NFTS: Record<NftId, NftDef> = {
     attributes: [
       { label: 'Order', value: ORDER_ID },
       { label: 'Product', value: PRODUCT },
-      { label: 'Quantity', value: `${BATCH_QTY} units` },
+      { label: 'Quantity', value: `${BATCH_QTY.toLocaleString('en-US')} units` },
     ],
     linkedTo: 'factory',
     accent: '#5ab8ff',
@@ -73,7 +83,8 @@ export const NFTS: Record<NftId, NftDef> = {
     id: 'subcontractor',
     tokenId: 3,
     name: 'Subcontractor Approval',
-    standard: 'ERC-721 (soulbound)',
+    scope: 'Individual',
+    opensea: 'https://opensea.io/collection/subcontractor-approval-sc-001',
     image: '/images/subcontractor-approval.jpg',
     holder: 'Zayed',
     role: 'Subcontractor · SC-001',
@@ -92,7 +103,8 @@ export const NFTS: Record<NftId, NftDef> = {
     id: 'handoff',
     tokenId: 4,
     name: 'Batch Handoff',
-    standard: 'ERC-721',
+    scope: 'Individual',
+    opensea: 'https://opensea.io/collection/batch-handoff',
     image: '/images/batch-handoff.jpg',
     holder: 'Ibrahim',
     role: 'Logistics',
@@ -101,7 +113,7 @@ export const NFTS: Record<NftId, NftDef> = {
       'Minted only when the sender AND the receiver both confirm. If either sign-off is missing, payment for the order stays held.',
     attributes: [
       { label: 'Stage', value: 'Finishing' },
-      { label: 'Quantity', value: `${BATCH_QTY} T-shirts` },
+      { label: 'Quantity', value: `${BATCH_QTY.toLocaleString('en-US')} T-shirts` },
       { label: 'Sign-offs required', value: 'Sender + Receiver' },
     ],
     linkedTo: 'order',
@@ -111,7 +123,8 @@ export const NFTS: Record<NftId, NftDef> = {
     id: 'finishing',
     tokenId: 5,
     name: 'Verified Finishing Completion',
-    standard: 'ERC-721',
+    scope: 'Individual',
+    opensea: 'https://opensea.io/collection/verified-finishing-completion',
     image: '/images/finishing-completion.jpg',
     holder: 'Lucas',
     role: 'Inspector',
@@ -154,13 +167,16 @@ export function metadataJson(nft: NftDef, mintedAt: string | null): string {
       name: `${nft.name} #${nft.tokenId}`,
       description: nft.purpose,
       image: nft.image,
+      external_url: nft.opensea,
       attributes: [
+        { trait_type: 'Type', value: `${nft.scope} NFT` },
         { trait_type: 'Holder', value: nft.holder },
         { trait_type: 'Role', value: nft.role },
         ...nft.attributes.map((a) => ({ trait_type: a.label, value: a.value })),
         ...(nft.linkedTo ? [{ trait_type: 'Linked to', value: NFTS[nft.linkedTo].name }] : []),
       ],
-      minted_at: mintedAt,
+      chain: CHAIN,
+      simulated_mint_at: mintedAt,
     },
     null,
     2,

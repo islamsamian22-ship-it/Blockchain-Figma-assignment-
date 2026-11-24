@@ -219,6 +219,18 @@ code,
   box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
+.btn-opensea {
+  display: inline-block;
+  margin: 10px 0 4px;
+  background: #2081e2;
+  color: #fff;
+  text-decoration: none;
+}
+
+.contract {
+  margin: 0 0 6px;
+}
+
 .btn-ghost {
   background: transparent;
   border-color: var(--border);
@@ -520,6 +532,71 @@ code,
 .nft-fallback-token {
   font-size: 2rem;
   color: var(--accent);
+}
+
+.wallet-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.chip.is-active {
+  border-color: var(--cyan);
+  color: var(--text);
+  background: rgba(56, 225, 208, 0.12);
+}
+
+.chip-count {
+  font-size: 0.72rem;
+  padding: 0 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.card-tags {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.scope {
+  padding: 2px 9px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.scope-group {
+  color: var(--cyan);
+  box-shadow: inset 0 0 0 1px var(--cyan);
+}
+
+.scope-individual {
+  color: var(--magenta);
+  box-shadow: inset 0 0 0 1px var(--magenta);
 }
 
 /* ---------- passport ---------- */
