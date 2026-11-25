@@ -35,11 +35,14 @@ const PEOPLE: Person[] = [
   },
   {
     id: 'factory',
-    name: 'Dhaka Cotton Works',
-    role: 'Main production factory',
+    name: 'Samian Islam',
+    role: 'Factory representative · Dhaka Cotton Works',
     holds: ['factory'],
-    does: ['Shows its credential to prove it is approved', 'Signs as the sender when a batch leaves the factory'],
-    seesIn: ['A wallet app on the factory manager’s phone', 'This app (orders assigned to the factory)'],
+    does: [
+      'Holds the credential proving Dhaka Cotton Works (FACTORY-001) is approved',
+      'Signs as the sender when a batch leaves the factory',
+    ],
+    seesIn: ['Wallet app or OpenSea profile', 'This app (orders assigned to Dhaka Cotton Works)'],
   },
   {
     id: 'zayed',
@@ -84,7 +87,7 @@ const FUTURE: { title: string; risk: string; next: string }[] = [
   },
   {
     title: 'Personal names on a permanent ledger',
-    risk: 'Names like Zayed, Ibrahim and Lucas in token metadata cannot be deleted later. That conflicts with data-protection rights such as GDPR’s right to erasure.',
+    risk: 'Names like Samian Islam, Zayed, Ibrahim and Lucas in token metadata cannot be deleted later. That conflicts with data-protection rights such as GDPR’s right to erasure.',
     next: 'Put pseudonymous IDs (SC-001, INSP-001) on-chain and keep names in a private database that can be edited.',
   },
   {
@@ -245,16 +248,17 @@ export default function HowItWorks() {
             </span>
           </li>
           <li>
-            <strong>Group NFTs go to a shared wallet</strong>
+            <strong>The group NFT goes to a shared wallet</strong>
             <span className="small muted">
-              The Order Passport and Factory Credential sit in a wallet that needs several team members to approve any
-              action (multi-signature).
+              The Production Order Passport sits in a wallet that needs several team members to approve any action
+              (multi-signature).
             </span>
           </li>
         </ol>
         <p className="small">
-          <strong>In this project today:</strong> the NFTs were created on OpenSea. Group NFTs belong to the team;
-          individual NFTs were made for each member (Zayed, Ibrahim, Lucas). Sending each one to its holder’s own
+          <strong>In this project today:</strong> the NFTs were created on OpenSea. The one group NFT, the Production
+          Order Passport, belongs to the whole team. The four individual NFTs belong to one member each: Samian Islam
+          (Factory Credential), Zayed, Ibrahim and Lucas. Sending each one to its holder’s own
           wallet is the step that turns them from pictures into credentials.
         </p>
       </section>
