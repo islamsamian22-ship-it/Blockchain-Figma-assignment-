@@ -8,6 +8,7 @@ Academic prototype showing how NFTs can trace a garment production order (2,000 
 - **Simulation**: step through the five mint events. The batch handoff needs both sender and receiver sign-off before it can be minted. Payment stays in escrow until finishing is inspected.
 - **NFT Wallet**: all five NFTs, filterable by Group / Individual. Click one for its attributes, linked tokens, metadata JSON and OpenSea link.
 - **Order Passport**: the parent order token, its release checklist and the tokens linked to it.
+- **How it works**: what is on-chain vs simulated, how NFTs are distributed to each person, a "see it as" view per role, portability, and open issues for a real rollout.
 
 ## NFTs
 The five NFTs are minted on Polygon and listed on OpenSea. The app links to each one. The supply-chain workflow, sign-offs and escrow payment in the app are simulated.
