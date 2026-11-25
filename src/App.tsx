@@ -12,6 +12,7 @@ import {
   type NftDef,
   type NftId,
 } from './nfts'
+import HowItWorks from './HowItWorks'
 
 /* ------------------------------------------------------------------ */
 /* State                                                               */
@@ -37,7 +38,7 @@ interface ChainState {
   log: LogEntry[]
 }
 
-type View = 'simulation' | 'wallet' | 'passport'
+type View = 'simulation' | 'wallet' | 'passport' | 'how'
 type ScopeFilter = 'All' | 'Group' | 'Individual'
 
 const QTY = BATCH_QTY.toLocaleString('en-US')
@@ -509,6 +510,7 @@ const VIEWS: { id: View; label: string }[] = [
   { id: 'simulation', label: 'Simulation' },
   { id: 'wallet', label: 'NFT Wallet' },
   { id: 'passport', label: 'Order Passport' },
+  { id: 'how', label: 'How it works' },
 ]
 
 export default function App() {
@@ -609,6 +611,7 @@ export default function App() {
         )}
         {view === 'wallet' && <WalletView state={state} onOpen={setOpenId} />}
         {view === 'passport' && <PassportView state={state} onOpen={setOpenId} />}
+        {view === 'how' && <HowItWorks />}
       </main>
 
       <footer className="footer small muted">

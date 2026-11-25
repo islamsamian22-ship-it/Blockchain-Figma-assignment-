@@ -672,6 +672,253 @@ code,
   border-left-color: var(--accent);
 }
 
+/* ---------- how it works ---------- */
+
+.how {
+  display: grid;
+  gap: 20px;
+}
+
+.how h3 {
+  margin-bottom: 6px;
+}
+
+.how h4 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+.how ul,
+.how ol {
+  margin: 0;
+  padding-left: 1.2em;
+  display: grid;
+  gap: 6px;
+}
+
+.how a {
+  color: var(--cyan);
+}
+
+.center {
+  text-align: center;
+}
+
+.how-intro h2 {
+  margin: 4px 0;
+  text-wrap: balance;
+}
+
+.real-vs-sim {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.real-vs-sim > div {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.real-vs-sim > div:first-child {
+  border-color: rgba(56, 225, 208, 0.45);
+}
+
+.real-vs-sim > div:last-child {
+  border-color: rgba(245, 184, 75, 0.4);
+}
+
+.real-vs-sim > div:last-child h3 {
+  color: var(--amber);
+}
+
+.real-vs-sim > div:first-child h3 {
+  color: var(--cyan);
+}
+
+.stack-diagram {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.stack-box {
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.stack-box.onchain {
+  border: 1px solid var(--blue);
+  background: rgba(90, 184, 255, 0.08);
+  --accent: var(--blue);
+}
+
+.stack-box.offchain {
+  border: 1px dashed var(--magenta);
+  background: rgba(224, 90, 216, 0.06);
+  --accent: var(--magenta);
+}
+
+.stack-arrow {
+  color: var(--muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.stack-arrow::after {
+  content: ' →';
+}
+
+.flow {
+  counter-reset: flow;
+  list-style: none;
+  padding: 0 !important;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px !important;
+  margin: 12px 0 !important;
+}
+
+.flow li {
+  counter-increment: flow;
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.flow li::before {
+  content: 'Step ' counter(flow);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.person-chips {
+  flex-wrap: wrap;
+  margin: 10px 0 14px;
+}
+
+.person-view {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.person-wallet {
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--cyan);
+  background: linear-gradient(160deg, rgba(56, 225, 208, 0.1), rgba(224, 90, 216, 0.06));
+}
+
+.person-wallet h4 {
+  margin: 4px 0 0;
+  font-size: 1.1rem;
+}
+
+.tag {
+  font-family: inherit;
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.held {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.held-nft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  border-radius: 10px;
+  background: rgba(7, 11, 24, 0.6);
+  color: var(--text) !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.held-nft img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.qr-mock {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 14px);
+  gap: 2px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.qr-grid span {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+}
+
+.qr-grid span.on {
+  background: #071022;
+}
+
+.person-details {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.person-details ul {
+  margin-bottom: 8px;
+}
+
+.portable {
+  margin-top: 10px !important;
+}
+
+.future-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.future-card {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--amber);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.future-card p {
+  margin: 6px 0 0;
+}
+
 /* ---------- modal ---------- */
 
 .modal-backdrop {
@@ -812,6 +1059,20 @@ code,
   .passport,
   .modal {
     grid-template-columns: 1fr;
+  }
+
+  .real-vs-sim,
+  .stack-diagram,
+  .person-view {
+    grid-template-columns: 1fr;
+  }
+
+  .stack-arrow {
+    justify-self: center;
+  }
+
+  .stack-arrow::after {
+    content: ' ↓';
   }
 
   .log-panel {
