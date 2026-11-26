@@ -43,7 +43,7 @@ export const CHAIN = 'Polygon'
 export const NFTS: Record<NftId, NftDef> = {
   factory: {
     id: 'factory',
-    tokenId: 1,
+    tokenId: 2,
     name: 'Factory Credential',
     scope: 'Individual',
     opensea: 'https://opensea.io/collection/factory-credentials-32228465',
@@ -52,7 +52,7 @@ export const NFTS: Record<NftId, NftDef> = {
     role: 'Factory representative',
     summary: 'Approves Dhaka Cotton Works (FACTORY-001) as the main factory for ORDER-001.',
     purpose:
-      'Issued to a facility once it has been approved, so anyone can check that the order is being made by an approved factory. The approval in this prototype is simulated and the facility is fictional.',
+      'Issued once the order exists, to approve the facility that will make it, so anyone can check that the order is being made by an approved factory. The approval in this prototype is simulated and the facility is fictional.',
     attributes: [
       { label: 'Factory', value: 'Dhaka Cotton Works' },
       { label: 'Factory ID', value: 'FACTORY-001' },
@@ -60,11 +60,12 @@ export const NFTS: Record<NftId, NftDef> = {
       { label: 'Location', value: 'Dhaka, Bangladesh' },
       { label: 'Stage', value: 'Finishing' },
     ],
+    linkedTo: 'order',
     accent: '#38e1d0',
   },
   order: {
     id: 'order',
-    tokenId: 2,
+    tokenId: 1,
     name: 'Production Order Passport',
     scope: 'Group',
     opensea: 'https://opensea.io/item/polygon/0xf843cd21c82608de63e21b9e809f4de757b6504f/1',
@@ -80,7 +81,6 @@ export const NFTS: Record<NftId, NftDef> = {
       { label: 'Product', value: PRODUCT },
       { label: 'Quantity', value: `${BATCH_QTY.toLocaleString('en-US')} units` },
     ],
-    linkedTo: 'factory',
     accent: '#5ab8ff',
   },
   subcontractor: {
@@ -145,7 +145,7 @@ export const NFTS: Record<NftId, NftDef> = {
   },
 }
 
-export const NFT_ORDER: NftId[] = ['factory', 'order', 'subcontractor', 'handoff', 'finishing']
+export const NFT_ORDER: NftId[] = ['order', 'factory', 'subcontractor', 'handoff', 'finishing']
 
 /** Deterministic fake tx hash so the demo looks the same on every run. */
 export function fakeTxHash(seed: string): string {

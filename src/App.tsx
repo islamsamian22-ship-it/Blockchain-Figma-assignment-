@@ -43,7 +43,8 @@ type ScopeFilter = 'All' | 'Group' | 'Individual'
 
 const QTY = BATCH_QTY.toLocaleString('en-US')
 
-const STORAGE_KEY = 'cw-supply-chain-v1'
+// v2: order passport is now minted before the factory credential
+const STORAGE_KEY = 'cw-supply-chain-v2'
 const GENESIS_BLOCK = 19_402_118
 
 const EMPTY_STATE: ChainState = {
@@ -75,17 +76,17 @@ function now(): string {
 
 /* Step copy for the simulation – one step per NFT */
 const STEPS: Record<NftId, { title: string; actor: string; action: string; detail: string }> = {
-  factory: {
-    title: 'Approve the factory',
-    actor: 'Crypto Whales Group → Dhaka Cotton Works',
-    action: 'Issue Factory Credential',
-    detail: 'Dhaka Cotton Works (FACTORY-001, Dhaka) is approved as the main production factory.',
-  },
   order: {
     title: 'Create the production order',
     actor: 'Crypto Whales Group',
     action: 'Mint Order Passport',
     detail: `${ORDER_ID}: ${QTY} × ${PRODUCT}. Payment is locked in escrow until the order is verified.`,
+  },
+  factory: {
+    title: 'Approve the factory for this order',
+    actor: 'Crypto Whales Group → Samian Islam (Dhaka Cotton Works)',
+    action: 'Issue Factory Credential',
+    detail: `Dhaka Cotton Works (FACTORY-001, Dhaka) is approved as the main production factory for ${ORDER_ID}.`,
   },
   subcontractor: {
     title: 'Approve the labelling subcontractor',
@@ -464,7 +465,7 @@ function PassportView({ state, onOpen }: { state: ChainState; onOpen: (id: NftId
             {QTY} × {PRODUCT} · made by Dhaka Cotton Works
           </p>
           <PaymentBadge state={state} />
-          {!state.minted.order && <p className="small muted">The passport is minted at step 2 of the simulation.</p>}
+          {!state.minted.order && <p className="small muted">The passport is minted at step 1 of the simulation.</p>}
         </div>
       </section>
 

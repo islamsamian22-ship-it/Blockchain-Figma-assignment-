@@ -1,6 +1,6 @@
 # Crypto Whales · Supply-Chain NFTs
 
-Academic prototype showing how NFTs can trace a garment production order (2,000 × Basic Cotton T-Shirts, `ORDER-001`) from factory onboarding to payment release. 
+Academic prototype showing how NFTs can trace a garment production order (2,000 × Basic Cotton T-Shirts, `ORDER-001`) from order creation and factory approval to payment release. 
 
 **Live demo:** https://islamsamian22-ship-it.github.io/Blockchain-Figma-assignment-/ (deployed by GitHub Actions on every push to `main`)
 
@@ -15,8 +15,8 @@ The five NFTs are minted on Polygon and listed on OpenSea. The app links to each
 
 | # | NFT | Type | Holder | OpenSea |
 |---|-----|------|--------|---------|
-| 1 | Factory Credential | Individual | Samian Islam (for Dhaka Cotton Works, FACTORY-001) | [collection](https://opensea.io/collection/factory-credentials-32228465) |
-| 2 | Production Order Passport | Group | Crypto Whales Group | [token](https://opensea.io/item/polygon/0xf843cd21c82608de63e21b9e809f4de757b6504f/1) |
+| 1 | Production Order Passport | Group | Crypto Whales Group | [token](https://opensea.io/item/polygon/0xf843cd21c82608de63e21b9e809f4de757b6504f/1) |
+| 2 | Factory Credential | Individual | Samian Islam (for Dhaka Cotton Works, FACTORY-001) | [collection](https://opensea.io/collection/factory-credentials-32228465) |
 | 3 | Subcontractor Approval | Individual | Zayed (SC-001) | [collection](https://opensea.io/collection/subcontractor-approval-sc-001) |
 | 4 | Batch Handoff | Individual | Ibrahim | [collection](https://opensea.io/collection/batch-handoff) |
 | 5 | Verified Finishing Completion | Individual | Lucas (Inspector) | [collection](https://opensea.io/collection/verified-finishing-completion) |
